@@ -5,8 +5,8 @@
 
 ## 🔗 リンク
 
-- 遊ぶ: https://sora3141.github.io/insider/
-- 制作: [T.OF...](https://sora3141.github.io/)
+- 遊ぶ: https://t-of.github.io/insider/
+- 制作: [T.OF...](https://t-of.github.io/)
 
 ## 遊び方
 
