@@ -247,6 +247,82 @@
   .roster .plus{color:var(--common); font-size:12px; font-weight:700; min-width:22px; text-align:right;}
   .roster.hl .r.me{margin:0 -16px; padding:12px 16px; background:rgba(255,77,94,.06);}
 
+
+  /* ---------- stage + side panel ---------- */
+  .stage{flex:1; display:flex; flex-direction:column;}
+  .side{display:none;}
+  .kb{display:none;}
+  kbd{font-family:var(--body); font-size:11px; font-weight:700; padding:1px 7px; border-radius:6px; border:1px solid currentColor; opacity:.55; margin-left:6px; line-height:1.5;}
+  .intro{display:none;}
+
+  /* ---------- desktop / website layout ---------- */
+  @media (min-width:960px){
+    body{font-size:16px;}
+    #root{max-width:1200px; padding:0 40px;}
+    .top{height:72px;}
+    .top .mini{font-size:18px;}
+    .icon-btn{width:44px; height:44px;}
+    .kb{display:inline;}
+    .dock{position:static; background:none; padding:28px 0 40px;}
+    h2{font-size:32px;}
+    .sub{font-size:16px;}
+    .step{font-size:13px;}
+
+    /* setup: hero left / form right */
+    .setup{display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); gap:64px; align-items:start; padding-top:12px;}
+    .s-hero{position:sticky; top:24px;}
+    .hero{padding:24px 0 8px;}
+    .logo{font-size:min(96px, 6.4vw);}
+    .logo-sub{font-size:15px; margin-top:16px;}
+    .hero p{font-size:16px; max-width:30em; margin:22px 0 18px;}
+    .intro{display:block; margin-top:32px;}
+    .intro h4{font-size:13px; letter-spacing:.12em; color:var(--muted); margin:0 0 12px;}
+    .intro .roles3 div{background:var(--surface); border:1px solid var(--line);}
+    .intro .roles3 p{color:var(--muted); font-size:14px; margin:0;}
+    .intro .roles3 p b{color:var(--ink);}
+    .flow{display:flex; gap:6px; margin-top:24px; flex-wrap:wrap;}
+    .flow span{font-size:13px; font-weight:700; padding:6px 12px; border-radius:999px; background:var(--surface); border:1px solid var(--line); color:var(--muted);}
+    .flow i{font-style:normal; color:var(--faint); align-self:center;}
+    .s-form{padding-top:24px;}
+    .panel{padding:24px;}
+
+    /* game: main stage + side panel */
+    .stage{display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:48px; align-items:start;}
+    .stage > .screen{max-width:600px; width:100%; margin:0 auto; min-height:calc(100dvh - 72px);}
+    .side{display:flex; flex-direction:column; gap:12px; position:sticky; top:16px; padding-bottom:24px;}
+    .side-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg); padding:18px 20px;}
+    .side-card h3{margin-bottom:12px;}
+    .phases{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px;}
+    .phases li{display:flex; align-items:center; gap:12px; padding:8px 0; color:var(--faint); font-weight:700; font-size:14px;}
+    .phases li i{width:22px; height:22px; border-radius:50%; border:1.5px solid var(--surface3); display:grid; place-items:center; font-style:normal; font-size:11px; font-family:var(--display);}
+    .phases li.done{color:var(--muted);} .phases li.done i{background:var(--surface3); border-color:var(--surface3); color:var(--muted);}
+    .phases li.cur{color:var(--ink);} .phases li.cur i{background:var(--ink); border-color:var(--ink); color:#15161b;}
+    .sp-list{list-style:none; margin:0; padding:0;}
+    .sp-list li{display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--line); font-size:14px;}
+    .sp-list li:last-child{border-bottom:0;}
+    .sp-list .n{font-family:var(--display); font-size:12px; color:var(--faint); width:14px; text-align:center;}
+    .sp-list .nm{flex:1; font-weight:700; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+    .sp-list li.cur{color:var(--ink);} .sp-list li.cur .nm{text-decoration:underline; text-underline-offset:4px;}
+    .sp-list .sc{font-family:var(--display); font-size:13px; color:var(--muted);}
+    .sp-list .ok{color:var(--common); font-size:12px; font-weight:700;}
+    .keys{display:grid; grid-template-columns:auto 1fr; gap:8px 12px; align-items:center; font-size:13px; color:var(--muted);}
+    .keys kbd{margin:0; opacity:.8; justify-self:start;}
+
+    /* bigger game pieces */
+    .rcard{width:360px;}
+    .ring{width:360px;}
+    .time{font-size:84px;}
+    .peekword .word{font-size:min(44px, calc(230px / var(--len,4)));}
+    .pick{grid-template-columns:repeat(3,1fr);}
+    .pick button{padding:18px 14px;}
+    .spot .big{font-size:48px;}
+    .flip{width:300px;}
+    .tips li{font-size:15px;}
+    .banner .t{font-size:36px;}
+  }
+
+  @media (min-width:1180px){ .plist{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px;} }
+
   /* ---------- modal ---------- */
   .modal{position:fixed; inset:0; z-index:50; background:rgba(5,6,9,.72); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
     display:flex; align-items:flex-end; justify-content:center; animation:fade .2s;}
@@ -339,6 +415,7 @@ const rand = n => Math.floor(Math.random()*n);
 const fmt = s => `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
 const roleOf = i => i===R.master ? 'master' : i===R.insider ? 'insider' : 'common';
 const nm = i => `<span class="name">${esc(R.names[i])}</span>`;
+const K = k => `<kbd class="kb">${k}</kbd>`;
 const wordHtml = (w, cls='word') => `<div class="${cls}" style="--len:${[...w].length}">${esc(w)}</div>`;
 
 /* ---------- sound / haptics / wake lock ---------- */
@@ -393,9 +470,10 @@ function togglePause(){
   T.paused = !T.paused;
   if(!T.paused) T.end = performance.now() + T.remain;
   const b = $('#pauseBtn');
-  if(b) b.innerHTML = T.paused ? `${ico.play}再開` : `${ico.pause}一時停止`;
+  if(b) b.innerHTML = pauseLabel();
   $('#ring')?.classList.toggle('paused', T.paused);
 }
+function pauseLabel(){ return (T && T.paused ? `${ico.play}再開` : `${ico.pause}一時停止`) + `<small class="kb">${K('P')}</small>`; }
 function drawRing(){
   if(!T) return;
   const arc = $('#arc'), time = $('#time'), ring = $('#ring');
@@ -422,10 +500,9 @@ function hold(el, on, off){
   el.addEventListener('pointerdown', start);
   ['pointerup','pointercancel','lostpointercapture'].forEach(t => el.addEventListener(t, end));
   el.addEventListener('contextmenu', e => e.preventDefault());
-  el.addEventListener('keydown', e => { if((e.key===' '||e.key==='Enter') && !e.repeat){ e.preventDefault(); active = true; on(); } });
-  el.addEventListener('keyup', e => { if(e.key===' '||e.key==='Enter') end(); });
-  el.addEventListener('blur', end);
+  keyHold = {on, off, active:false};
 }
+let keyHold = null;   // スペースキー長押しで on/off する対象（役職カード・お題確認）
 
 /* =========================================================
    Screens
@@ -442,12 +519,23 @@ V.setup = () => {
       <button class="btn text" data-act="resetScores">勝利数をリセット</button>
     </div>` : '';
   return `
+  <div class="setup"><div class="s-hero">
   <header class="hero">
     <div class="logo">INSI<em>D</em>ER</div>
     <div class="logo-sub">インサイダー・ゲーム</div>
     <p>みんなでお題を当てる協力と、答えを知る裏切り者を暴く推理。1台の端末を回して遊ぶ、4〜8人の会話ゲーム。</p>
     <button class="link" data-act="rules">${ico.book}ルールを見る</button>
   </header>
+  <div class="intro">
+    <h4>3つの役職</h4>
+    <div class="roles3">
+      <div><span class="tag master">マスター</span><p><b>全員に公開。</b>お題を知っていて、質問に「はい・いいえ・わからない」で答える。</p></div>
+      <div><span class="tag insider">インサイダー</span><p><b>正体は秘密。</b>こっそりお題を知っていて、庶民を正解へ誘導する。</p></div>
+      <div><span class="tag common">庶民</span><p>お題を知らない。質問でお題を当て、インサイダーを見つけ出す。</p></div>
+    </div>
+    <div class="flow"><span>マスター発表</span><i>→</i><span>役職確認</span><i>→</i><span>質問タイム</span><i>→</i><span>議論タイム</span><i>→</i><span>投票</span><i>→</i><span>正体公開</span></div>
+  </div>
+  </div><div class="s-form">
 
   <section class="panel">
     <div class="panel-h"><h3>プレイヤー</h3><span class="count">${n}<small>/ ${MAX_P}人</small></span></div>
@@ -481,7 +569,8 @@ V.setup = () => {
     </label>
   </section>
   ${board}
-  <div class="dock"><button class="btn primary big" data-act="start">ゲームを始める</button></div>`;
+  <div class="dock"><button class="btn primary big" data-act="start">ゲームを始める${K('Enter')}</button></div>
+  </div></div>`;
 };
 
 V.master = () => `
@@ -494,7 +583,7 @@ V.master = () => `
   </div>
   <h3 style="margin-top:14px;">別の人にする場合はタップ</h3>
   <div class="pick">${R.names.map((p,i)=>`<button class="${i===R.master?'on':''}" data-act="setMaster" data-arg="${i}"><span class="n">${i+1}</span>${esc(p)}</button>`).join('')}</div>
-  <div class="dock"><button class="btn primary big" data-act="deal">役職を配る</button></div>`;
+  <div class="dock"><button class="btn primary big" data-act="deal">役職を配る${K('Enter')}</button></div>`;
 
 V.deal = () => {
   const i = R.deal, last = i === R.n-1, role = roleOf(i), knows = role !== 'common';
@@ -505,7 +594,7 @@ V.deal = () => {
     <h2 class="who">${nm(i)} さんの番</h2>
     <p class="sub" style="margin-bottom:14px;">ほかの人は画面を見ないでください</p>
     <div class="rcard" id="rcard" tabindex="0" role="button" aria-label="長押しで役職を表示">
-      <div class="rcard-back"><div class="eye">${ico.eye}</div><b>長押しで役職を見る</b><small>指を離すと隠れます</small></div>
+      <div class="rcard-back"><div class="eye">${ico.eye}</div><b>長押しで役職を見る</b><small>指を離すと隠れます<span class="kb"><br>スペースキーを押している間も表示</span></small></div>
       <div class="rcard-face face-${role}">
         <div class="r-en">${ROLE[role].en}</div>
         <div class="r-ja">${ROLE[role].ja}</div>
@@ -517,7 +606,7 @@ V.deal = () => {
   </div>
   <div class="dock">
     <button class="btn primary big" id="dealNext" data-act="dealNext" ${R.seen?'':'disabled'}>
-      ${last ? '全員の確認が終わった' : `確認した <span class="sm">→ 次は ${esc(R.names[i+1])} さん</span>`}
+      ${last ? '全員の確認が終わった' : `確認した <span class="sm">→ 次は ${esc(R.names[i+1])} さん</span>`}${K('Enter')}
     </button>
   </div>`;
 };
@@ -531,7 +620,7 @@ V.ready = () => `
     <li><span>02</span><div>マスターは質問タイム中、<b>長押し</b>でいつでもお題を確認できます。</div></li>
     <li><span>03</span><div>誰かがお題を言い当てたら、マスターが<b>「正解が出た！」</b>をタップ。</div></li>
   </ul>
-  <div class="dock"><button class="btn primary big" data-act="beginQuestion">質問タイム開始 <span class="sm">${cfg.minutes}:00</span></button></div>`;
+  <div class="dock"><button class="btn primary big" data-act="beginQuestion">質問タイム開始 <span class="sm">${cfg.minutes}:00</span>${K('Enter')}</button></div>`;
 
 V.question = () => `
   <div class="center">
@@ -540,8 +629,8 @@ V.question = () => `
     <p class="sub" style="margin-bottom:12px;">マスター ${nm(R.master)} に質問しよう</p>
   </div>
   <div class="tools">
-    <button class="tool master" id="peek">${ico.eye}長押しでお題<small>マスター専用</small></button>
-    <button class="tool" id="pauseBtn" data-act="pause">${T&&T.paused?ico.play+'再開':ico.pause+'一時停止'}</button>
+    <button class="tool master" id="peek">${ico.eye}長押しでお題<small>マスター専用${K('Space')}</small></button>
+    <button class="tool" id="pauseBtn" data-act="pause">${pauseLabel()}</button>
   </div>
   <div class="dock">
     <button class="btn primary big" data-act="correct">正解が出た！</button>
@@ -563,7 +652,7 @@ V.discuss = () => `
     <h2 style="font-size:21px;">インサイダーは誰だ？</h2>
     <p class="sub">お題を当てた ${nm(R.guesser)} さんは怪しい？<br>質問の流れや、誘導っぽい発言を振り返ろう。</p>
   </div>
-  <div class="dock"><button class="btn primary big" id="toVote" data-act="toVote">投票へ進む</button></div>`;
+  <div class="dock"><button class="btn primary big" id="toVote" data-act="toVote">投票へ進む${K('Enter')}</button></div>`;
 
 V.vote1 = () => {
   const maj = Math.floor(R.n/2)+1;
@@ -599,7 +688,7 @@ V.reveal = () => {
     <h2>${nm(a)} さんの正体は…</h2>
     <div class="flip ${R.flipped?'on':''}" id="flip" data-act="flip" role="button" tabindex="0" aria-label="タップして正体を公開">
       <div class="flip-in">
-        <div class="f-back"><div class="q">?</div><small>タップしてめくる</small></div>
+        <div class="f-back"><div class="q">?</div><small>タップしてめくる<span class="kb"><br>（スペースキーでも可）</span></small></div>
         <div class="f-front face-${role}" style="border-radius:26px;">
           <div class="r-en">${ROLE[role].en}</div><div class="r-ja" style="margin-bottom:6px;">${ROLE[role].ja}</div>
           <p class="rdesc" style="margin-top:4px;">${role==='insider' ? '見破られた！' : 'インサイダーではなかった…'}</p>
@@ -610,7 +699,7 @@ V.reveal = () => {
       <p class="sub" style="font-size:16px;">${role==='insider' ? '<b class="c-common">庶民チームの勝利！</b>' : '<b class="c-insider">インサイダーの逃げ切り…</b>'}</p>
     </div>
   </div>
-  <div class="dock fade-late" ${R.flipped?'':'style="visibility:hidden"'} id="revealDock"><button class="btn primary big" data-act="toResult">結果を見る</button></div>`;
+  <div class="dock fade-late" ${R.flipped?'':'style="visibility:hidden"'} id="revealDock"><button class="btn primary big" data-act="toResult">結果を見る${K('Enter')}</button></div>`;
 };
 
 V.result = () => {
@@ -637,7 +726,7 @@ V.result = () => {
     }).join('')}
   </div>
   <div class="dock">
-    <button class="btn primary big" data-act="nextRound">次のラウンドへ <span class="sm">マスター交代</span></button>
+    <button class="btn primary big" data-act="nextRound">次のラウンドへ <span class="sm">マスター交代</span>${K('Enter')}</button>
     <button class="btn text" data-act="toSetup">プレイヤー・設定を変更</button>
   </div>`;
 };
@@ -653,6 +742,58 @@ function renderTop(){
     ${g ? `<button class="icon-btn" data-act="quit" aria-label="ゲームを終了">${ico.x}</button>` : ''}`;
 }
 
+
+/* ---------- side panel (desktop) ---------- */
+const PHASES = ['マスター発表','役職確認','質問タイム','議論タイム','投票','正体公開・結果'];
+const PHASE_OF = {master:0, deal:1, ready:2, question:2, guesser:3, discuss:3, vote1:4, vote2:4, reveal:5, result:5};
+function sideHtml(){
+  const ph = R.outcome === 'timeout' ? 5 : PHASE_OF[screen];
+  const showRoles = screen === 'result';
+  const players = R.names.map((p,i) => {
+    const tags = [];
+    if(showRoles){ const r = roleOf(i); tags.push(`<span class="tag ${r}">${ROLE[r].ja}</span>`); }
+    else if(i === R.master) tags.push('<span class="tag master">マスター</span>');
+    if(i === R.guesser && ph >= 3) tags.push('<span class="tag plain">正解者</span>');
+    if(screen === 'deal'){ if(i < R.deal) tags.push('<span class="ok">✓ 確認済</span>'); }
+    const cur = screen === 'deal' && i === R.deal;
+    return `<li class="${cur?'cur':''}"><span class="n">${i+1}</span><span class="nm">${esc(p)}</span>${tags.join('')}<span class="sc">${scores[p]||0}勝</span></li>`;
+  }).join('');
+  const keys = {
+    deal:[['Space','押している間だけ役職を表示'],['Enter','次の人へ']],
+    question:[['Space','押している間だけお題を表示'],['P','一時停止 / 再開']],
+    reveal:[['Space','カードをめくる'],['Enter','結果へ']],
+  }[screen] || [['Enter','次へ進む']];
+  return `
+    <div class="side-card"><h3>Round ${roundNo} の進行</h3>
+      <ol class="phases">${PHASES.map((t,i)=>`<li class="${i<ph?'done':i===ph?'cur':''}"><i>${i<ph?'✓':i+1}</i>${t}</li>`).join('')}</ol></div>
+    <div class="side-card"><h3>プレイヤー ${R.n}人</h3><ul class="sp-list">${players}</ul></div>
+    ${['guesser','vote2'].includes(screen) ? '' : `<div class="side-card"><h3>キーボード操作</h3><div class="keys">${keys.map(([k,d])=>`<kbd>${k}</kbd><span>${d}</span>`).join('')}</div></div>`}`;
+}
+
+/* ---------- keyboard ---------- */
+document.addEventListener('keydown', e => {
+  if($('#modal') || e.metaKey || e.ctrlKey || e.altKey) return;
+  const tag = e.target.tagName;
+  if(tag === 'INPUT' || tag === 'TEXTAREA') return;
+  if(e.key === ' '){
+    if(screen === 'reveal' && R && !R.flipped){ e.preventDefault(); if(!e.repeat) ACT.flip(); return; }
+    if(keyHold){ e.preventDefault(); if(!e.repeat && !keyHold.active){ keyHold.active = true; keyHold.on(); } }
+    return;
+  }
+  if(e.key === 'Enter' && !e.repeat){
+    if(tag === 'BUTTON' || screen === 'question') return;        // ボタン自身のEnter・誤操作しやすい「正解！」は除外
+    if(screen === 'reveal' && R && !R.flipped){ e.preventDefault(); ACT.flip(); return; }
+    const b = document.querySelector('.dock .btn.primary:not(:disabled)');
+    if(b){ e.preventDefault(); b.click(); }
+    return;
+  }
+  if((e.key === 'p' || e.key === 'P') && screen === 'question'){ e.preventDefault(); togglePause(); }
+});
+document.addEventListener('keyup', e => {
+  if(e.key === ' ' && keyHold){ e.preventDefault(); if(keyHold.active){ keyHold.active = false; keyHold.off(); } }
+});
+window.addEventListener('blur', () => { if(keyHold && keyHold.active){ keyHold.active = false; keyHold.off(); } });
+
 /* ---------- render ---------- */
 function go(s){
   if(s === 'result') applyScore();
@@ -667,7 +808,12 @@ function applyScore(){
 }
 function render(){
   renderTop();
-  $('#app').innerHTML = `<section class="screen s-${screen}">${V[screen]()}</section>`;
+  if(keyHold && keyHold.active) keyHold.off();
+  keyHold = null;
+  const body = V[screen]();
+  $('#app').innerHTML = screen === 'setup'
+    ? `<section class="screen s-setup">${body}</section>`
+    : `<div class="stage"><section class="screen s-${screen}">${body}</section><aside class="side" aria-label="ラウンド情報">${sideHtml()}</aside></div>`;
   AFTER[screen] && AFTER[screen]();
 }
 const AFTER = {
@@ -696,9 +842,7 @@ const AFTER = {
     if(R.discussOver) markDiscussOver();
   },
   reveal(){
-    const f = $('#flip');
     if(R.flipped) $('.screen').classList.add('shown');
-    f.addEventListener('keydown', e => { if(e.key===' '||e.key==='Enter'){ e.preventDefault(); ACT.flip(); } });
   },
 };
 
