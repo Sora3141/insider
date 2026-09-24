@@ -6,7 +6,7 @@
 ## 🔗 リンク
 
 - 遊ぶ: https://sora3141.github.io/insider/
-- 制作: [T.OFO](https://sora3141.github.io/)
+- 制作: [T.OF...](https://sora3141.github.io/)
 
 ## 遊び方
 
@@ -44,5 +44,5 @@ python3 -m http.server 8000   # → http://localhost:8000/
 
 - `index.html` — アプリ本体（HTML/CSS/JS）
 - `manifest.webmanifest` / `sw.js` / `icons/` — PWA（ホーム画面への追加・オフライン）
-- `webapp-kit/` — 「アプリにする」「共有」ボタン（T.OFO 共通の部品）
+- `webapp-kit/` — 「アプリにする」「共有」ボタン（T.OF... 共通の部品）
 - 設定は `localStorage` の `insider.v2` に保存（端末内のみ）
