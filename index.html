@@ -8,13 +8,13 @@ try{var d=JSON.parse(decodeURIComponent(m[1]));for(var k in d)if(localStorage.ge
 history.replaceState(null,'',location.pathname+location.search+(m[2]?'#'+m[2]:''));})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d0e12">
-<meta name="description" content="1台の端末を回して遊ぶ、4〜8人のインサイダー・ゲーム。お題当ての協力と、答えを知る裏切り者を暴く推理を、アプリが進行します。">
-<title>インサイダー・ゲーム — 1台で遊ぶ会話と推理</title>
+<meta name="description" content="1台の端末を回して遊ぶ、4〜8人の会話ゲーム。お題当ての協力と、答えを知る裏切り者を暴く推理を、アプリが進行します。">
+<title>ワケシリ — お題を知る者がひとり紛れる</title>
 
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="インサイダー・ゲーム">
-<meta property="og:title" content="インサイダー・ゲーム — 1台で遊ぶ会話と推理">
-<meta property="og:description" content="1台の端末を回して遊ぶ、4〜8人のインサイダー・ゲーム。お題当ての協力と、答えを知る裏切り者を暴く推理を、アプリが進行します。">
+<meta property="og:site_name" content="ワケシリ">
+<meta property="og:title" content="ワケシリ — お題を知る者がひとり紛れる">
+<meta property="og:description" content="1台の端末を回して遊ぶ、4〜8人の会話ゲーム。お題当ての協力と、答えを知る裏切り者を暴く推理を、アプリが進行します。">
 <meta property="og:url" content="https://t-of.github.io/insider/">
 <meta property="og:image" content="https://t-of.github.io/insider/icons/og.png">
 <meta property="og:image:width" content="1200">
@@ -25,7 +25,7 @@ history.replaceState(null,'',location.pathname+location.search+(m[2]?'#'+m[2]:''
 <!-- apple-mobile-web-app-status-bar-style は付けない（black-translucent だと iOS 26 で上部が隠れる） -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="インサイダー">
+<meta name="apple-mobile-web-app-title" content="ワケシリ">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
 <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png">
@@ -393,8 +393,8 @@ history.replaceState(null,'',location.pathname+location.search+(m[2]?'#'+m[2]:''
 <script src="./webapp-kit/webapp-kit.js"></script>
 <script>
 /* =========================================================
-   インサイダー・ゲーム（パス＆プレイ）
-   公式ルール準拠：マスター公開 / 質問タイム / 議論タイム(=質問の経過時間) / 2段階投票
+   ワケシリ（パス＆プレイ）
+   進行：親の発表 / 質問タイム / 議論タイム(=質問の経過時間) / 2段階投票
    ========================================================= */
 
 const WORDS = {
@@ -408,12 +408,12 @@ const WORDS = {
 };
 
 const ROLE = {
-  master:{en:"MASTER", ja:"マスター",
+  master:{en:"OYA", ja:"親",
     desc:"あなたはお題を知っています（全員に公開される役職）。質問には「はい・いいえ・わからない」だけで答えてください。"},
-  insider:{en:"INSIDER", ja:"インサイダー",
-    desc:"あなたは裏でお題を知っています。正体を隠したまま、庶民をさりげなく正解へ導きましょう。"},
-  common:{en:"COMMONS", ja:"庶民",
-    desc:"マスターに質問してお題を当てましょう。そして、答えを知っているかのように振る舞うインサイダーを見抜いて！"},
+  insider:{en:"WAKESHIRI", ja:"ワケシリ",
+    desc:"あなたは裏でお題を知っています。正体を隠したまま、子をさりげなく正解へ導きましょう。"},
+  common:{en:"KO", ja:"子",
+    desc:"親に質問してお題を当てましょう。そして、答えを知っているかのように振る舞うワケシリを見抜いて！"},
 };
 
 const ico = {
@@ -571,8 +571,8 @@ V.setup = () => {
   return `
   <div class="setup"><div class="s-hero">
   <header class="hero">
-    <div class="logo">INSI<em>D</em>ER</div>
-    <div class="logo-sub">インサイダー・ゲーム</div>
+    <div class="logo">ワケ<em>シリ</em></div>
+    <div class="logo-sub">WAKESHIRI</div>
     <p>みんなでお題を当てる協力と、答えを知る裏切り者を暴く推理。1台の端末を回して遊ぶ、4〜8人の会話ゲーム。</p>
     <div class="links">
       <button class="link" data-act="rules">${ico.book}ルールを見る</button>
@@ -583,11 +583,11 @@ V.setup = () => {
   <div class="intro">
     <h4>3つの役職</h4>
     <div class="roles3">
-      <div><span class="tag master">マスター</span><p><b>全員に公開。</b>お題を知っていて、質問に「はい・いいえ・わからない」で答える。</p></div>
-      <div><span class="tag insider">インサイダー</span><p><b>正体は秘密。</b>こっそりお題を知っていて、庶民を正解へ誘導する。</p></div>
-      <div><span class="tag common">庶民</span><p>お題を知らない。質問でお題を当て、インサイダーを見つけ出す。</p></div>
+      <div><span class="tag master">親</span><p><b>全員に公開。</b>お題を知っていて、質問に「はい・いいえ・わからない」で答える。</p></div>
+      <div><span class="tag insider">ワケシリ</span><p><b>正体は秘密。</b>こっそりお題を知っていて、子を正解へ誘導する。</p></div>
+      <div><span class="tag common">子</span><p>お題を知らない。質問でお題を当て、ワケシリを見つけ出す。</p></div>
     </div>
-    <div class="flow"><span>マスター発表</span><i>→</i><span>役職確認</span><i>→</i><span>質問タイム</span><i>→</i><span>議論タイム</span><i>→</i><span>投票</span><i>→</i><span>正体公開</span></div>
+    <div class="flow"><span>親の発表</span><i>→</i><span>役職確認</span><i>→</i><span>質問タイム</span><i>→</i><span>議論タイム</span><i>→</i><span>投票</span><i>→</i><span>正体公開</span></div>
   </div>
   </div><div class="s-form">
 
@@ -600,15 +600,15 @@ V.setup = () => {
         <button class="icon-btn" data-act="delPlayer" data-arg="${i}" ${n<=MIN_P?'disabled':''} aria-label="削除">${ico.x}</button></li>`).join('')}
     </ol>
     <button class="add" data-act="addPlayer" ${n>=MAX_P?'disabled':''}>${ico.plus}プレイヤーを追加</button>
-    <p class="hint">座っている順（時計回り）に入力すると、マスターが順番に回ります。</p>
+    <p class="hint">座っている順（時計回り）に入力すると、親が順番に回ります。</p>
   </section>
 
   <section class="panel">
     <h3>質問タイム</h3>
     <div class="seg">${[3,4,5,7].map(m=>`<button class="${cfg.minutes===m?'on':''}" data-act="minutes" data-arg="${m}">${m}<small>分</small></button>`).join('')}</div>
-    <p class="hint">公式は5分。議論タイムは「お題が当たるまでにかかった時間」と同じになります。</p>
+    <p class="hint">目安は5分。議論タイムは「お題が当たるまでにかかった時間」と同じになります。</p>
 
-    <h3>マスターの決め方</h3>
+    <h3>親の決め方</h3>
     <div class="seg">
       <button class="${cfg.masterMode==='rotate'?'on':''}" data-act="masterMode" data-arg="rotate">順番に交代</button>
       <button class="${cfg.masterMode==='random'?'on':''}" data-act="masterMode" data-arg="random">ランダム</button>
@@ -618,7 +618,7 @@ V.setup = () => {
     <div class="chips">${Object.keys(WORDS).map(c=>`<button class="chip ${cfg.cats.includes(c)?'on':''}" data-act="cat" data-arg="${esc(c)}">${esc(c)}</button>`).join('')}</div>
 
     <label class="toggle">
-      <span>庶民にもジャンルを教える<small>お題を当てやすくしたいときに</small></span>
+      <span>子にもジャンルを教える<small>お題を当てやすくしたいときに</small></span>
       <input type="checkbox" id="showGenre" ${cfg.showGenre?'checked':''}><i></i>
     </label>
   </section>
@@ -629,12 +629,12 @@ V.setup = () => {
 };
 
 V.master = () => `
-  <div class="step">Round ${roundNo} · マスター発表</div>
-  <h2>今回のマスターを<br>みんなに発表します</h2>
+  <div class="step">Round ${roundNo} · 親の発表</div>
+  <h2>今回の親を<br>みんなに発表します</h2>
   <div class="spot">
-    <div class="label">MASTER</div>
+    <div class="label">OYA</div>
     <div class="big">${esc(R.names[R.master])}</div>
-    <p>マスターは公開された役職。お題を知っていて、質問に答える係です。</p>
+    <p>親は公開された役職。お題を知っていて、質問に答える係です。</p>
   </div>
   <h3 style="margin-top:14px;">別の人にする場合はタップ</h3>
   <div class="pick">${R.names.map((p,i)=>`<button class="${i===R.master?'on':''}" data-act="setMaster" data-arg="${i}"><span class="n">${i+1}</span>${esc(p)}</button>`).join('')}</div>
@@ -668,12 +668,12 @@ V.deal = () => {
 
 V.ready = () => `
   <div class="step">準備完了</div>
-  <h2>マスターの <span class="c-master">${esc(R.names[R.master])}</span> さんに<br>端末を渡してください</h2>
-  <p class="sub">端末はマスターの手元に置き、スタートを押して質問タイム開始。</p>
+  <h2>親の <span class="c-master">${esc(R.names[R.master])}</span> さんに<br>端末を渡してください</h2>
+  <p class="sub">端末は親の手元に置き、スタートを押して質問タイム開始。</p>
   <ul class="tips">
-    <li><span>01</span><div>庶民・インサイダーは、マスターに「<b>はい / いいえ / わからない</b>」で答えられる質問をしてお題を探ります。</div></li>
-    <li><span>02</span><div>マスターは質問タイム中、<b>長押し</b>でいつでもお題を確認できます。</div></li>
-    <li><span>03</span><div>誰かがお題を言い当てたら、マスターが<b>「正解が出た！」</b>をタップ。</div></li>
+    <li><span>01</span><div>子・ワケシリは、親に「<b>はい / いいえ / わからない</b>」で答えられる質問をしてお題を探ります。</div></li>
+    <li><span>02</span><div>親は質問タイム中、<b>長押し</b>でいつでもお題を確認できます。</div></li>
+    <li><span>03</span><div>誰かがお題を言い当てたら、親が<b>「正解が出た！」</b>をタップ。</div></li>
   </ul>
   <div class="dock"><button class="btn primary big" data-act="beginQuestion">質問タイム開始 <span class="sm">${cfg.minutes}:00</span>${K('Enter')}</button></div>`;
 
@@ -681,10 +681,10 @@ V.question = () => `
   <div class="center">
     <div class="step">質問タイム</div>
     ${ringHtml('', '残り時間', `<div class="peekword"><div class="wl">お題</div>${wordHtml(R.word)}<div class="genre">${esc(R.cat)}</div></div>`)}
-    <p class="sub" style="margin-bottom:12px;">マスター ${nm(R.master)} に質問しよう</p>
+    <p class="sub" style="margin-bottom:12px;">親 ${nm(R.master)} に質問しよう</p>
   </div>
   <div class="tools">
-    <button class="tool master" id="peek">${ico.eye}長押しでお題<small>マスター専用${K('Space')}</small></button>
+    <button class="tool master" id="peek">${ico.eye}長押しでお題<small>親専用${K('Space')}</small></button>
     <button class="tool" id="pauseBtn" data-act="pause">${pauseLabel()}</button>
   </div>
   <div class="dock">
@@ -704,7 +704,7 @@ V.discuss = () => `
   <div class="center">
     <div class="step">議論タイム</div>
     ${ringHtml('discuss', '議論の残り時間')}
-    <h2 style="font-size:21px;">インサイダーは誰だ？</h2>
+    <h2 style="font-size:21px;">ワケシリは誰だ？</h2>
     <p class="sub">お題を当てた ${nm(R.guesser)} さんは怪しい？<br>質問の流れや、誘導っぽい発言を振り返ろう。</p>
   </div>
   <div class="dock"><button class="btn primary big" id="toVote" data-act="toVote">投票へ進む${K('Enter')}</button></div>`;
@@ -714,9 +714,9 @@ V.vote1 = () => {
   return `
   <div class="center">
     <div class="step">投票 1 / 正解者は？</div>
-    <h2>${nm(R.guesser)} さんは<br>インサイダーだと思う？</h2>
+    <h2>${nm(R.guesser)} さんは<br>ワケシリだと思う？</h2>
     <div class="callout">せーの！</div>
-    <p class="sub">で、全員（マスター含む）一斉に意思表示</p>
+    <p class="sub">で、全員（親も含む）一斉に意思表示</p>
     <div class="thumbs" style="width:100%"><div><span>👍</span>思う</div><div><span>👎</span>思わない</div></div>
     <p class="hint">${R.n}人中 <b style="color:var(--ink)">${maj}人以上</b> が 👍 なら過半数</p>
   </div>
@@ -728,12 +728,12 @@ V.vote1 = () => {
 
 V.vote2 = () => `
   <div class="step">投票 2 / 指差し</div>
-  <h2>では、インサイダーは誰？</h2>
-  <p class="sub"><span class="callout" style="margin:0 4px 0 0;">せーの！</span>で全員一斉に、インサイダーだと思う人を指差してください。</p>
+  <h2>では、ワケシリは誰？</h2>
+  <p class="sub"><span class="callout" style="margin:0 4px 0 0;">せーの！</span>で全員一斉に、ワケシリだと思う人を指差してください。</p>
   <h3>最も多く指された人をタップ</h3>
   <div class="pick">${R.names.map((p,i)=> (i===R.master||i===R.guesser) ? '' :
     `<button data-act="accuse" data-arg="${i}"><span class="n">${i+1}</span>${esc(p)}</button>`).join('')}</div>
-  <p class="hint">同数で並んだときは、マスターの ${esc(R.names[R.master])} さんが決めます。</p>`;
+  <p class="hint">同数で並んだときは、親の ${esc(R.names[R.master])} さんが決めます。</p>`;
 
 V.reveal = () => {
   const a = R.accused, role = roleOf(a);
@@ -746,12 +746,12 @@ V.reveal = () => {
         <div class="f-back"><div class="q">?</div><small>タップしてめくる<span class="kb"><br>（スペースキーでも可）</span></small></div>
         <div class="f-front face-${role}" style="border-radius:26px;">
           <div class="r-en">${ROLE[role].en}</div><div class="r-ja" style="margin-bottom:6px;">${ROLE[role].ja}</div>
-          <p class="rdesc" style="margin-top:4px;">${role==='insider' ? '見破られた！' : 'インサイダーではなかった…'}</p>
+          <p class="rdesc" style="margin-top:4px;">${role==='insider' ? '見破られた！' : 'ワケシリではなかった…'}</p>
         </div>
       </div>
     </div>
     <div class="fade-late" style="width:100%">
-      <p class="sub" style="font-size:16px;">${role==='insider' ? '<b class="c-common">庶民チームの勝利！</b>' : '<b class="c-insider">インサイダーの逃げ切り…</b>'}</p>
+      <p class="sub" style="font-size:16px;">${role==='insider' ? '<b class="c-common">子チームの勝利！</b>' : '<b class="c-insider">ワケシリの逃げ切り…</b>'}</p>
     </div>
   </div>
   <div class="dock fade-late" ${R.flipped?'':'style="visibility:hidden"'} id="revealDock"><button class="btn primary big" data-act="toResult">結果を見る${K('Enter')}</button></div>`;
@@ -760,9 +760,9 @@ V.reveal = () => {
 V.result = () => {
   const o = R.outcome, ins = R.insider;
   const B = {
-    common:{k:'COMMONS WIN', t:'庶民チームの勝利', p:`インサイダー ${nm(ins)} を見破った！（マスターも勝利）`},
-    insider:{k:'INSIDER WINS', t:'インサイダーの勝利', p:`インサイダーは ${nm(ins)} でした。まんまと逃げ切り！`},
-    timeout:{k:'TIME UP', t:'全員の負け', p:`時間内にお題を当てられませんでした。<br>インサイダーは ${nm(ins)} でした。`},
+    common:{k:'KO TEAM WINS', t:'子チームの勝利', p:`ワケシリ ${nm(ins)} を見破った！（親も勝利）`},
+    insider:{k:'WAKESHIRI WINS', t:'ワケシリの勝利', p:`ワケシリは ${nm(ins)} でした。まんまと逃げ切り！`},
+    timeout:{k:'TIME UP', t:'全員の負け', p:`時間内にお題を当てられませんでした。<br>ワケシリは ${nm(ins)} でした。`},
   }[o];
   const winners = o==='common' ? R.names.map((_,i)=>i).filter(i=>i!==ins) : o==='insider' ? [ins] : [];
   return `
@@ -781,7 +781,7 @@ V.result = () => {
     }).join('')}
   </div>
   <div class="dock">
-    <button class="btn primary big" data-act="nextRound">次のラウンドへ <span class="sm">マスター交代</span>${K('Enter')}</button>
+    <button class="btn primary big" data-act="nextRound">次のラウンドへ <span class="sm">親を交代</span>${K('Enter')}</button>
     <button class="btn text" data-act="toSetup">プレイヤー・設定を変更</button>
   </div>`;
 };
@@ -790,7 +790,7 @@ V.result = () => {
 function renderTop(){
   const g = inGame();
   $('#top').innerHTML = `
-    ${g ? `<span class="mini">INSIDER</span><span class="round">Round ${roundNo}</span>` : ''}
+    ${g ? `<span class="mini">WAKESHIRI</span><span class="round">Round ${roundNo}</span>` : ''}
     <span class="sp"></span>
     <button class="icon-btn" data-act="sound" aria-label="サウンド切替">${cfg.sound?ico.soundOn:ico.soundOff}</button>
     <button class="icon-btn" data-act="rules" aria-label="ルール">${ico.help}</button>
@@ -799,7 +799,7 @@ function renderTop(){
 
 
 /* ---------- side panel (desktop) ---------- */
-const PHASES = ['マスター発表','役職確認','質問タイム','議論タイム','投票','正体公開・結果'];
+const PHASES = ['親の発表','役職確認','質問タイム','議論タイム','投票','正体公開・結果'];
 const PHASE_OF = {master:0, deal:1, ready:2, question:2, guesser:3, discuss:3, vote1:4, vote2:4, reveal:5, result:5};
 function sideHtml(){
   const ph = R.outcome === 'timeout' ? 5 : PHASE_OF[screen];
@@ -807,7 +807,7 @@ function sideHtml(){
   const players = R.names.map((p,i) => {
     const tags = [];
     if(showRoles){ const r = roleOf(i); tags.push(`<span class="tag ${r}">${ROLE[r].ja}</span>`); }
-    else if(i === R.master) tags.push('<span class="tag master">マスター</span>');
+    else if(i === R.master) tags.push('<span class="tag master">親</span>');
     if(i === R.guesser && ph >= 3) tags.push('<span class="tag plain">正解者</span>');
     if(screen === 'deal'){ if(i < R.deal) tags.push('<span class="ok">✓ 確認済</span>'); }
     const cur = screen === 'deal' && i === R.deal;
@@ -1060,43 +1060,43 @@ function toast(msg){
 function showRules(){
   modal(`
     <div class="step" style="margin-top:0">How to play</div>
-    <h2>インサイダー・ゲームの遊び方</h2>
+    <h2>ワケシリの遊び方</h2>
     <p class="sub">お題当ての「協力」と、裏切り者探しの「推理」を1ゲームで。4〜8人、1ラウンド約10分。</p>
 
     <div class="sec"><h4>役職</h4>
       <div class="roles3">
-        <div><span class="tag master">マスター</span><p>1人。<b>全員に公開</b>。お題を知っていて、質問に「はい・いいえ・わからない」で答える。</p></div>
-        <div><span class="tag insider">インサイダー</span><p>1人。<b>正体は秘密</b>。こっそりお題を知っていて、庶民を正解へ誘導する。</p></div>
-        <div><span class="tag common">庶民</span><p>残り全員。お題を知らない。質問でお題を当て、インサイダーを見つけ出す。</p></div>
+        <div><span class="tag master">親</span><p>1人。<b>全員に公開</b>。お題を知っていて、質問に「はい・いいえ・わからない」で答える。</p></div>
+        <div><span class="tag insider">ワケシリ</span><p>1人。<b>正体は秘密</b>。こっそりお題を知っていて、子を正解へ誘導する。</p></div>
+        <div><span class="tag common">子</span><p>残り全員。お題を知らない。質問でお題を当て、ワケシリを見つけ出す。</p></div>
       </div>
     </div>
 
     <div class="sec"><h4>ゲームの流れ</h4>
       <ol>
-        <li><b>マスター発表</b> — 今回のマスターを全員に公開。</li>
+        <li><b>親の発表</b> — 今回の親を全員に公開。</li>
         <li><b>役職確認</b> — 端末を順番に回し、長押しで自分の役職を確認。</li>
-        <li><b>質問タイム（5分）</b> — マスターに質問してお題を当てる。誰かが正解を言ったら終了。</li>
-        <li><b>議論タイム</b> — 「質問タイムにかかった時間」だけ、インサイダーは誰かを話し合う。</li>
-        <li><b>投票1</b> — 「お題を当てた人はインサイダーか？」を全員で一斉に 👍 / 👎。過半数が 👍 なら、その人の正体を公開。</li>
-        <li><b>投票2</b> — 過半数に届かなければ、全員で一斉にインサイダーだと思う人を指差す。最多の人の正体を公開（同数はマスターが決定）。</li>
+        <li><b>質問タイム（5分）</b> — 親に質問してお題を当てる。誰かが正解を言ったら終了。</li>
+        <li><b>議論タイム</b> — 「質問タイムにかかった時間」だけ、ワケシリは誰かを話し合う。</li>
+        <li><b>投票1</b> — 「お題を当てた人はワケシリか？」を全員で一斉に 👍 / 👎。過半数が 👍 なら、その人の正体を公開。</li>
+        <li><b>投票2</b> — 過半数に届かなければ、全員で一斉にワケシリだと思う人を指差す。最多の人の正体を公開（同数は親が決定）。</li>
       </ol>
     </div>
 
     <div class="sec"><h4>勝敗</h4>
       <ol>
-        <li>時間内にお題を当てられなければ、<b>インサイダーも含めて全員の負け</b>。</li>
-        <li>正体を公開した人がインサイダーなら、<b>庶民チーム（マスター含む）の勝ち</b>。</li>
-        <li>違う人だったら、<b>インサイダーの一人勝ち</b>。</li>
+        <li>時間内にお題を当てられなければ、<b>ワケシリも含めて全員の負け</b>。</li>
+        <li>正体を公開した人がワケシリなら、<b>子チーム（親も含む）の勝ち</b>。</li>
+        <li>違う人だったら、<b>ワケシリの一人勝ち</b>。</li>
       </ol>
     </div>
 
     <div class="sec"><h4>コツ</h4>
-      <p>インサイダーは早く当てさせすぎると議論時間が長くなり、自分で当てると真っ先に疑われます。庶民は「なぜその質問をしたのか？」に注目しよう。</p>
+      <p>ワケシリは早く当てさせすぎると議論時間が長くなり、自分で当てると真っ先に疑われます。子は「なぜその質問をしたのか？」に注目しよう。</p>
     </div>
     <button class="btn primary" data-close>閉じる</button>`);
 }
 
-WebAppKit.init({ title:'インサイダー・ゲーム', text:'1台の端末を回して遊ぶ、4〜8人のインサイダー・ゲーム' });
+WebAppKit.init({ title:'ワケシリ', text:'お題を知る者がひとり紛れる。1台の端末を回して遊ぶ、4〜8人の会話ゲーム' });
 // オフライン用（file:// で開いたときは登録しない）
 if('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('./sw.js').catch(()=>{});
 

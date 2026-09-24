@@ -1,4 +1,6 @@
-# インサイダー
+# ワケシリ
+
+表示名は「ワケシリ」。URL・リポジトリ名・保存キー・キャッシュ名は insider のまま。
 
 T.OF... のアプリ。https://t-of.github.io/insider/
 
