@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "インサイダー・ゲーム — 1台で遊ぶ会話と推理",
+  "short_name": "インサイダー",
+  "description": "1台の端末を回して遊ぶ、4〜8人のインサイダー・ゲーム。お題当ての協力と、答えを知る裏切り者を暴く推理を、アプリが進行します。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d0e12",
+  "theme_color": "#0d0e12",
+  "lang": "ja",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
