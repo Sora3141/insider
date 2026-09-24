@@ -458,10 +458,17 @@ const K = k => `<kbd class="kb">${k}</kbd>`;
 const wordHtml = (w, cls='word') => `<div class="${cls}" style="--len:${[...w].length}">${esc(w)}</div>`;
 
 /* ---------- sound / haptics / wake lock ---------- */
+// iPhone のマナーモードでも鳴らす（Safari 16.4 以降）。
+// 'playback' にすると音楽アプリの曲が止まるので、アプリの音がオンのときだけにする。
+function setAudioSession(soundOn){
+  try{ if(navigator.audioSession) navigator.audioSession.type = soundOn ? 'playback' : 'auto'; }catch(e){ /* 対応していない */ }
+}
+setAudioSession(cfg.sound);
 let actx = null;
 function tone(freq, dur=.12, type='sine', vol=.18){
   if(!cfg.sound) return;
   try{
+    setAudioSession(true);
     actx = actx || new (window.AudioContext||window.webkitAudioContext)();
     const o = actx.createOscillator(), g = actx.createGain(), t = actx.currentTime;
     o.type = type; o.frequency.value = freq;
@@ -895,7 +902,7 @@ const AFTER = {
    ========================================================= */
 const ACT = {
   rules: showRules,
-  sound(){ cfg.sound = !cfg.sound; saveCfg(); renderTop(); if(cfg.sound) tone(660,.08); },
+  sound(){ cfg.sound = !cfg.sound; saveCfg(); setAudioSession(cfg.sound); renderTop(); if(cfg.sound) tone(660,.08); },
   quit(){
     confirmDlg('ゲームを中断しますか？', 'このラウンドは記録されずに、設定画面へ戻ります。', '中断する', () => {
       stopTimer(); T = null; keepAwake(false); go('setup');
